@@ -1,5 +1,5 @@
 # Programs that will run after Openbox windows manager has started
-PROJECT="busyman" #is that autostart gets any variables?
+PROJECT="busyman" #is that autostart gets any variables???
 xrandr --output default --mode 1280x768 &
 xrandr --output Virtual1 --mode 1280x768 &
 feh --bg-scale /opt/${PROJECT}/data/images/wall03.png &
