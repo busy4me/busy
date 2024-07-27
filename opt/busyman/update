@@ -10,6 +10,9 @@ BACKUP=/var/backups/${PROJECT}
 BACKUP_2=/var/backups/${PROJECT}/data
 UPDATE_FILE=$1
 UPDATE_FILE_2=$2
+BRANCH="dev"
+SOURCE_URL="https://github.com/busy4me/busyman/archive/refs/heads/$BRANCH.zip"
+SOURCE_DIR="/tmp/source"
 
 root_check() {
   if [ "$USER" != "root" ]; then
@@ -17,6 +20,17 @@ root_check() {
     echo "Run this script as root! exit..." | logline
   else
     echo -e "\e[32mStart OK ...\e[0m" | logline
+  fi
+}
+
+download_source() {
+  mkdir ${SOURCE_DIR} 2>/dev/null
+  rm ${SOURCE_DIR}/${BRANCH}.zip
+  if wget ${SOURCE_URL} -O ${SOURCE_DIR}/${BRANCH}.zip; then
+    python3 -c "from zipfile import PyZipFile; PyZipFile( '''$SOURCE_DIR/$BRANCH.zip''' ).extractall( '''$SOURCE_DIR''' )"; \
+    && echo -e "\e[32m[ OK ] source extracted in $SOURCE_DIR/$BRANCH\e[0m"
+  else
+    echo -e "\e[31m[ ERROR: ] no file, no update\e[0m"
   fi
 }
 
@@ -79,7 +93,7 @@ PATH=$PATH:/opt/$PROJECT:/opt/$PROJECT/plugins/fb:/opt/$PROJECT/plugins/yo
 }
 
 backup_all_project_files() { # create backup in tmp
-  echo -e "\e[32m Backup ...\e[0m"
+  echo -e "\e[32m Backup all project files...\e[0m"
   TMP_DIR="/tmp/$PROJECT-tmp/$(date +%Y-%m-%d--%H-%M-%S)"
   mkdir $TMP_DIR
   cp -R /opt/$PROJECT/* $TMP_DIR
@@ -382,6 +396,9 @@ case $1 in
     tint2
     openbox_config
     logrotate
+  ;;
+  --download|download)
+    download_source
   ;;
   --busyman|busyman)
     download_busyman_files
