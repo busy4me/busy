@@ -27,10 +27,12 @@ download_source() {
   mkdir ${SOURCE_DIR} 2>/dev/null
   rm ${SOURCE_DIR}/${BRANCH}.zip
   if wget ${SOURCE_URL} -O ${SOURCE_DIR}/${BRANCH}.zip; then
-    python3 -c "from zipfile import PyZipFile; PyZipFile( '''$SOURCE_DIR/$BRANCH.zip''' ).extractall( '''$SOURCE_DIR''' )"; \
-    && echo -e "\e[32m[ OK ] source extracted in $SOURCE_DIR/$BRANCH\e[0m"
+    python3 -c "from zipfile import PyZipFile; PyZipFile( '''$SOURCE_DIR/$BRANCH.zip''' ).extractall( '''$SOURCE_DIR''' )";
+    if
+      echo -e "\e[31m[ OK ] source extracted in \e[91m$SOURCE_DIR/$BRANCH\e[0m"
+    fi
   else
-    echo -e "\e[31m[ ERROR: ] no file, no update\e[0m"
+    echo -e "\e[31m[ ERROR: ] no file, no update :(... \e[0m"
   fi
 }
 
