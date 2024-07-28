@@ -25,7 +25,7 @@ root_check() {
 
 download_source() {
   mkdir ${SOURCE_DIR} 2>/dev/null
-  rm ${SOURCE_DIR}/${BRANCH}.zip
+  rm -R ${SOURCE_DIR}/*
   if wget ${SOURCE_URL} -O ${SOURCE_DIR}/${BRANCH}.zip; then
     # python3 -c "from zipfile import PyZipFile; PyZipFile( '''$SOURCE_DIR/$BRANCH.zip''' ).extractall( '''$SOURCE_DIR''' )";
     # python PyZipFile does not extract symlinks, unzip need to be installed
