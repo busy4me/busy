@@ -545,12 +545,11 @@ rm /usr/local/bin/fb-collect-data
 ln -s /opt/${PROJECT}/fb/fb-collect-data /usr/local/bin/fb-collect-data 2>/dev/null
 echo -e "done...\e[0m"
 
-echo "All files updated .............................................."
-echo "ls -la /opt/$PROJECT"
-  ls --color -lAGbh --time-style='+%b %d %Y %H:%M' /opt/$PROJECT
-echo "ls -la /opt/$PROJECT"/fb
-  ls --color -lAGbh --time-style='+%b %d %Y %H:%M' /opt/$PROJECT/fb
-
-echo -e "\e[32m OK \e[0m"
+#echo "All files updated .............................................."
+#echo "ls -la /opt/$PROJECT"
+#  ls --color -lAGbh --time-style='+%b %d %Y %H:%M' /opt/$PROJECT
+#echo "ls -la /opt/$PROJECT"/fb
+#  ls --color -lAGbh --time-style='+%b %d %Y %H:%M' /opt/$PROJECT/fb
+#echo -e "\e[32m OK \e[0m"
 # set +x
 exit 0
