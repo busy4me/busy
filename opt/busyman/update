@@ -403,6 +403,7 @@ case $1 in
     download_source
   ;;
   --busyman|busyman)
+    download_source
     download_busyman_files
   ;;
   --logrotate|logrotate)

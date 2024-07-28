@@ -694,6 +694,8 @@ declare -a stuff2=(
 "tint2"
 "psmisc"
 "ffmpeg"
+"unzip"
+"nginx"
 )
 	for _PACKAGE in ${stuff2[@]}; do
 		echoinfo "install package: $_PACKAGE ............................. wait ..."
