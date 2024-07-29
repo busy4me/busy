@@ -35,8 +35,8 @@ spot01_position_size() {
 
 BR01_run() {
   $BR01 \
-  --window-size="750,700" \
-  --window-position="5,10" \
+  --window-size="800,600" \
+  --window-position="0,0" \
   --user-data-dir="/tmp/chrome" \
   --incognito \
   --disable-notifications \
