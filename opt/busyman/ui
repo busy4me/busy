@@ -1,0 +1,71 @@
+#!/bin/bash
+PROJECT="busyman"
+PLUGIN="main"
+SCRIPT=$PLUGIN
+LOGFILE=/var/log/${PROJECT}.log
+SAVE_DIR=/opt/${PROJECT}/data/main # with user permision 777
+PROJECT_DIR=/opt/${PROJECT} # with root permision 755, read only for users
+source /opt/${PROJECT}/${PROJECT}.cfg
+source /opt/${PROJECT}/${PROJECT}.sh # global functions
+echo "start" > /opt/${PROJECT}/tmp/$SCRIPT$DISPLAY-status
+mkdir -p $SAVE_DIR 2>/dev/null
+__wallpaper_change() {
+  INT=$(( $INT +1 ))
+  if [ $INT -eq 4 ]; then
+    INT=0
+  fi
+feh --bg-scale /opt/${PROJECT}/data/images/wall0$INT.png
+}
+
+noVNC_run() {
+screen -S noVNC$DISPLAY -X kill
+noVNC_PROC="/opt/noVNC/utils/novnc_proxy --vnc localhost:5998 --listen localhost:6998"
+# "websockify -D --web=/usr/share/novnc 6998 localhost:5998"
+screen -dmS noVNC$DISPLAY $noVNC_PROC
+noVNC_URL="http://localhost:6998/vnc_lite.html?host=localhost&port=6998&password=busyman&scale=true"
+}
+
+spot01_position_size() {
+  _WINDOW=$(xdotool search --onlyvisible --name "$SPOT01")
+  xdotool search --sync --onlyvisible --name "$SPOT01" windowunmap windowmap| logline
+  transset_blank
+  xdotool search --sync --onlyvisible --name "$SPOT01" windowactivate | logline
+  xdotool search --sync --onlyvisible --name "$SPOT01" windowsize $BR01x $BR01y windowmove $POSITION_x $POSITION_y | logline
+}
+
+BR01_run() {
+  $BR01 \
+  --window-size="750,700" \
+  --window-position="5,10" \
+  --user-data-dir="/tmp/chrome" \
+  --incognito \
+  --disable-notifications \
+  --mute-audio \
+  --disable-device-discovery-notifications \
+  --no-first-run \
+  --no-default-browser-check \
+  --disable-translate \
+  --process-per-site \
+  --disable-sync-preferences \
+  --disable-gpu \
+  --disable-plugins \
+  --disable-plugins-discovery \
+  --disable-preconnect \
+  --dns-prefetch-disable \
+  --no-experiments \
+  --no-pings \
+  --no-referrers \
+  --disable-infobars \
+  --disable-session-crashed-bubble \
+  $noVNC_URL & 2>/dev/null | logline
+}
+
+case $1 in
+  stop)
+    screen -S noVNC$DISP -X kill
+  ;;
+  *)
+    noVNC_run
+    BR01_run
+  ;;
+esac
