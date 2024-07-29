@@ -38,6 +38,34 @@ download_source() {
   fi
 }
 
+download_source() {
+  SOURCE=$1
+  case $1 in
+    novnc)
+      SOURCE_URL="https://github.com/novnc/noVNC/archive/refs/heads/master.zip"
+    ;;
+    $PROJECT)
+      SOURCE_URL="https://github.com/busy4me/busyman/archive/refs/heads/dev.zip"
+    ;;
+    *)
+      echo "no source"
+    ;;
+  esac
+  rm -R ${SOURCE_DIR}/${SOURCE}
+  mkdir -p ${SOURCE_DIR}/${SOURCE} 2>/dev/null
+  if wget ${SOURCE_URL} -O ${SOURCE_DIR}/${SOURCE}; then
+    unzip -qq ${SOURCE_DIR}/${SOURCE}/*.zip -d ${SOURCE_DIR}/${SOURCE}
+    cd ${SOURCE_DIR}/${SOURCE}/*/.
+    SOURCE_SAVED=$(pwd)
+    if [[ $? -eq 0 ]]; then
+      echo -e "\e[32m[ OK ] source extracted in \e[92m ${SOURCE_DIR}/${SOURCE}e[0m"
+    fi
+  else
+    echo -e "\e[31m[ ERROR: ] no file, no update :(... \e[0m"
+  fi
+	done
+}
+
 create_structure() {
 chmod 777 /var/log/${PROJECT}.log
 mkdir /opt/${PROJECT} 2>/dev/null
@@ -402,10 +430,10 @@ case $1 in
     logrotate
   ;;
   --download|download)
-    download_source
+    download_source $PROJECT
   ;;
   --busyman|busyman)
-    download_source
+    download_source $PROJECT
     download_busyman_files
   ;;
   --logrotate|logrotate)
