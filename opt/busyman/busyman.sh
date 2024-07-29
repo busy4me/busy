@@ -82,8 +82,8 @@ gen_random() { # generate random number between two values, usage: generate_rand
 # screenshot to local catalog
 scrot_local () {
   code="-"$1
-  mkdir -p /opt/${PROJECT}/data/scrot/$SCRIPT
-  scrot1="/opt/${PROJECT}/data/scrot/$SCRIPT/$(date +%Y%m%d-%H%M%S)-$JOB-scrot$DISPLAY$code.jpg"
+  mkdir -p /tmp/scrot/$SCRIPT
+  scrot1="/tmp/scrot/$SCRIPT/$(date +%Y%m%d-%H%M%S)-$JOB-scrot$DISPLAY$code.jpg"
   scrot -q 50 ${scrot1}
   echo -e "\e[33m code: \e[35m" ${code} "\e[33m scrot file: \e[35m" ${scrot1} "\e[0m" | logline
 }
