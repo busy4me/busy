@@ -42,10 +42,10 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[0
 #  fi
 #fi
 
-PATH=$PATH:/opt/busy4me:/opt/busy4me/fb:/var/log
-DISPLAY=:0
+#PATH=$PATH:/opt/busy4me:/opt/busy4me/fb:/var/log
+#DISPLAY=:0
 XAUTHORITY='/home/busyman/.Xauthority'
-source /opt/busy4me/fb/fb-config
+#source /opt/busy4me/fb/fb-config
 
 # if the command-not-found package is installed, use it
 if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-not-found ]; then

@@ -4,6 +4,4 @@ alias lls="ls --color -lAGbh --time-style='+%b %d %Y %H:%M'"
 alias bl='su busyman; cd /'
 alias sb='su busyman; cd /'
 
-alias bu='/opt/busy4me/update'
-alias update='/opt/busyman/update'
-alias update2='/opt/busyman/update2'
+#alias update='/opt/busyman/update'

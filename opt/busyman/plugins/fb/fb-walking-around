@@ -571,12 +571,12 @@ spot() {
   #  "https://www.facebook.com/jobs"
     "https://www.facebook.com/videos"
   #  "https://www.facebook.com/games/instantgames/category/?category=400"
-  #  "https://www.facebook.com/gaming/feed/"
+    "https://www.facebook.com/gaming/feed/"
   #  "https://www.facebook.com/marketplace/"
     "https://www.facebook.com/watch/"
-  #  "https://www.facebook.com/watch/shows/"
+    "https://www.facebook.com/watch/shows/"
     "https://www.facebook.com/watch/live/"
-  #  "https://www.facebook.com/pages/"
+    "https://www.facebook.com/pages/"
   #  "https://www.facebook.com/marketplace/groups/"
   #  "https://www.facebook.com/jobs"
   #  "https://www.facebook.com/offers/v2/wallet"
@@ -628,7 +628,7 @@ loop () {
   "https://www.facebook.com/jobs"
   "https://www.facebook.com/videos"
   "https://www.facebook.com/games/instantgames/category/?category=400"
-#  "https://www.facebook.com/gaming/feed/"
+  "https://www.facebook.com/gaming/feed/"
 #  "https://www.facebook.com/marketplace/"
   "https://www.facebook.com/watch/"
   "https://www.facebook.com/watch/shows/"
@@ -636,7 +636,7 @@ loop () {
   "https://www.facebook.com/watch/live/"
   "https://www.facebook.com/watch/live/"
   "https://www.facebook.com/watch/live/"
-#  "https://www.facebook.com/pages/"
+  "https://www.facebook.com/pages/"
 #  "https://www.facebook.com/marketplace/groups/"
 #  "https://www.facebook.com/jobs"
 #  "https://www.facebook.com/offers/v2/wallet"
@@ -652,8 +652,8 @@ loop () {
     echo "[ WEBPAGE ] url, step=$step, progress=$progress, SPOT01url=$SPOT01url, FUNCNAME=$FUNCNAME, comment=open url page"
     title='extra_pause'
     walking_around_wall $SPOT01url
-    pause $(gen_random 1 60) $title
-    extra_pause
+    # pause $(gen_random 1 60) $title
+    # extra_pause
   done
 #| sort -R #shuf -n 1 #shuffle random SPOT01url
 #  echo "[ LOOP ] start, step=$step, progress=$progress, SPOT01url=$SPOT01url, FUNCNAME=$FUNCNAME, comment=open url page"

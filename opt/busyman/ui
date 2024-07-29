@@ -1,7 +1,5 @@
 #!/bin/bash
 PROJECT="busyman"
-PLUGIN="main"
-SCRIPT=$PLUGIN
 LOGFILE=/var/log/${PROJECT}.log
 SAVE_DIR=/opt/${PROJECT}/data/main # with user permision 777
 PROJECT_DIR=/opt/${PROJECT} # with root permision 755, read only for users
@@ -22,15 +20,15 @@ screen -S noVNC$DISPLAY -X kill
 noVNC_PROC="/opt/noVNC/utils/novnc_proxy --vnc localhost:5998 --listen localhost:6998"
 # "websockify -D --web=/usr/share/novnc 6998 localhost:5998"
 screen -dmS noVNC$DISPLAY $noVNC_PROC
-noVNC_URL="http://localhost:6998/vnc_lite.html?host=localhost&port=6998&password=busyman&scale=true"
+noVNC_URL="http://localhost:6998/vnc_lite.html?host=localhost&port=6998&password=busyman&scale=remote"
 }
 
-spot01_position_size() {
+ui_position_size() {
   _WINDOW=$(xdotool search --onlyvisible --name "$SPOT01")
-  xdotool search --sync --onlyvisible --name "$SPOT01" windowunmap windowmap| logline
+  xdotool search --sync --onlyvisible --name novnc windowunmap windowmap| logline
   transset_blank
-  xdotool search --sync --onlyvisible --name "$SPOT01" windowactivate | logline
-  xdotool search --sync --onlyvisible --name "$SPOT01" windowsize $BR01x $BR01y windowmove $POSITION_x $POSITION_y | logline
+  xdotool search --sync --onlyvisible --name novnc windowactivate | logline
+  xdotool search --sync --onlyvisible --name "novnc" windowsize 800 688 windowmove 0 -87 | logline
 }
 
 BR01_run() {
@@ -57,6 +55,7 @@ BR01_run() {
   --no-referrers \
   --disable-infobars \
   --disable-session-crashed-bubble \
+  --disable-hang-monitor \
   $noVNC_URL & 2>/dev/null | logline
 }
 
@@ -67,5 +66,6 @@ case $1 in
   *)
     noVNC_run
     BR01_run
+    ui_position_size
   ;;
 esac
