@@ -51,14 +51,15 @@ download_source() {
       echo "no source"
     ;;
   esac
+  echo -e "\e[33m[ START ] start remove old and download new source \e[94m ${SOURCE_URL}\e[0m"
   rm -R ${SOURCE_DIR}/${SOURCE}
   mkdir -p ${SOURCE_DIR}/${SOURCE} 2>/dev/null
-  if wget ${SOURCE_URL} -P ${SOURCE_DIR}/${SOURCE}; then
+  if wget -q ${SOURCE_URL} -P ${SOURCE_DIR}/${SOURCE}; then
     unzip -qq ${SOURCE_DIR}/${SOURCE}/*.zip -d ${SOURCE_DIR}/${SOURCE}
     cd ${SOURCE_DIR}/${SOURCE}/*/.
     SOURCE_SAVED=$(pwd)
     if [[ $? -eq 0 ]]; then
-      echo -e "\e[32m[ OK ] source extracted in \e[92m ${SOURCE_DIR}/${SOURCE}e[0m"
+      echo -e "\e[32m[ OK ] source dated $(stat -c "%y" ${SOURCE_SAVED}) extracted in \e[92m ${SOURCE_SAVED}\e[0m"
     fi
   else
     echo -e "\e[31m[ ERROR: ] no file, no update :(... \e[0m"
@@ -430,6 +431,9 @@ case $1 in
   ;;
   --download|download)
     download_source $PROJECT
+  ;;
+  --download-novnc|download-novnc)
+    download_source novnc
   ;;
   --busyman|busyman)
     download_source $PROJECT
