@@ -1,18 +1,17 @@
 # Programs that will run after Openbox windows manager has started
 PROJECT="busyman" #is that autostart gets any variables???
-xrandr --output default --mode 1280x768 &
-xrandr --output Virtual1 --mode 1280x768 &
+xrandr --output default --mode 800x600 &
+xrandr --output Virtual1 --mode 800x600 &
+xrandr --output Virtual1 --mode 800x600 &
 feh --bg-scale /opt/${PROJECT}/data/images/wall03.png &
 xset -dpms &
 xset s off &
 xcompmgr &
 if [ $(echo $DISPLAY) = ":98" ]; then
-  (sleep 2s && tint2 -c /home/busyman/.config/tint2/mask01) &
   (sleep 2s && tint2 -c /home/busyman/.config/tint2/panel01) &
   export DISPLAY=:98 && screen -dmS frame00$DISPLAY '/opt/busyman/frame00' &
 fi
 if [ $(echo $DISPLAY) = ":97" ]; then
-  (sleep 2s && tint2 -c /home/busyman/.config/tint2/mask01) &
   (sleep 2s && tint2 -c /home/busyman/.config/tint2/panel01) &
   export DISPLAY=:97 && screen -dmS frame00$DISPLAY '/opt/${PROJECT}/frame00' &
 fi
