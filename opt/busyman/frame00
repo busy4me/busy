@@ -37,7 +37,7 @@ reset_status() {
   fi
   rm /opt/${PROJECT}/tmp/$1
 }
-reset_status
+sudo reset_status
 
 echo "move mouse away...." | logline
 xdotool mousemove 8 45

@@ -942,6 +942,7 @@ EOF
 # Programs that will run after Openbox windows manager has started
 xrandr --output default --mode 800x600 &
 xrandr --output Virtual1 --mode 800x600 &
+xrandr --output VGA-1 --mode 800x600 &
 feh --bg-scale /opt/${_USER}/data/images/wall03.png &
 xset -dpms &
 xset s off &
