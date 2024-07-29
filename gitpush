@@ -21,7 +21,6 @@ username_get () {
     gu=$(echo $(cat ./.git/config) | sed 's/^.*github.com\///' | sed 's/\/.*//')
     ;;
   esac
-
   echo -e "\e[95m Press ENTER if username is correct or type correct one\n\
   Current username: \e[33m"$gu"\e[0m"
   read guser
@@ -37,7 +36,6 @@ remote_get () {
   echo -e "\e[95m Press ENTER if remote name is correct or type correct one\n\
   Current remote name: \e[33m"$re"\e[0m"
   read remote
-
   if [ -z "$remote" ]
   then
     remote=$re
@@ -47,7 +45,6 @@ remote_get () {
 
 git_push () {
   git add .
-
   repo=$(echo ${PWD/*\//})
   branch=master
   echo -e "\e[95mCurrent repository:\e[0m"$repo"\e[95m, branch:\e[0m"$branch"\e[95m, \
@@ -65,11 +62,9 @@ git_push () {
     echo -e "Push to github with comment: $emoji $comment"
     ;;
   esac
-
   git commit -m "$emoji $comment"
   git remote rm $remote
   git remote add $remote git@github.com:$guser/$repo
-
   git push -u $remote master
   echo -e "\e[30m\e[42m all done \e[0m bye!"
 }
