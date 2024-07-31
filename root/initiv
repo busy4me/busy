@@ -160,13 +160,14 @@ __change_hostname () { #help: change hostname mached IP address, also used for w
 	_IP_END=$(echo $_IP | sed 's/.*\.//')
 	_EXT_IP=$(curl -s http://icanhazip.com | tr '\n' ' ' | sed 's/[[:space:]]//g')
 # ========================================================================================
+# === hostname is main NIC MAC address                                                 ===
 # === hostname structure:                                                              ===
 # === HWMAC (dash) NETMAC last six characters                                          ===
 # === where: HWMAC - last four characters of hardware UUID                             ===
-# ===        NETMAC - last four characters of network card MAC address                  ===
-# === eg.:   e733-b52e                                                               ===
+# ===        NETMAC - last four characters of network card MAC address                 ===
+# === eg.:   e733-b52e                                                                 ===
 # ========================================================================================
-	_NEW_HOSTNAME="$_HWMAC-$_NETMAC"
+	_NEW_HOSTNAME="$_MAC"
 	_OLD_HOSTNAME=$(cat /etc/hostname)
 	if [ ! "$_OLD_HOSTNAME" == "$_NEW_HOSTNAME" ];	then
 		echoinfo " _OLD_HOSTNAME=$_OLD_HOSTNAME  ...set new hostname: _NEW_HOSTNAME=$_NEW_HOSTNAME"
@@ -766,7 +767,7 @@ cat > /home/$_USER/.vncserver  << 'EOF'
 PATH="$PATH:/usr/bin/"
 DISPLAY="98"
 DEPTH="16"
-GEOMETRY="1024x768"
+GEOMETRY="1280x960"
 NAME="vncserver"
 
 while getopts ':d: :g:' opt

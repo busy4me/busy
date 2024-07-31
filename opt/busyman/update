@@ -126,14 +126,10 @@ PATH=$PATH:/opt/$PROJECT:/opt/$PROJECT/plugins/fb:/opt/$PROJECT/plugins/yo
 
 backup_all_project_files() { # create backup in tmp
   echo -e "\e[32m Backup all project files...\e[0m"
-  TMP_DIR="/tmp/$PROJECT-tmp/$(date +%Y-%m-%d--%H-%M-%S)"
-  mkdir $TMP_DIR
-  cp -R /opt/$PROJECT/* $TMP_DIR
   BCK_DIR="/var/backups/$PROJECT/$(date +%Y-%m-%d--%H-%M-%S)"
   mkdir $BCK_DIR
-  cp -R /opt/$PROJECT/* $BCK_DIR
-  rm /opt/var-backups-*
-  ln -s ${BCK_DIR} /opt/var-backups/${PROJECT}
+  cp -d /opt/$PROJECT/* $BCK_DIR
+  cp -dR /opt/$PROJECT/plugins $BCK_DIR
 }
 
 delete_all_project_files() { # delete all project files and folders

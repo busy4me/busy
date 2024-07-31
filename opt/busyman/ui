@@ -7,6 +7,10 @@ source /opt/${PROJECT}/${PROJECT}.cfg
 source /opt/${PROJECT}/${PROJECT}.sh # global functions
 echo "start" > /opt/${PROJECT}/tmp/$SCRIPT$DISPLAY-status
 mkdir -p $SAVE_DIR 2>/dev/null
+__TRANSSET=0                                         ############################################################
+transset_blank () {                                  #  change __TRANSSET to 0 to set current window invisible  #
+  transset -a $__TRANSSET                            ############################################################
+}
 __wallpaper_change() {
   INT=$(( $INT +1 ))
   if [ $INT -eq 4 ]; then
@@ -18,17 +22,32 @@ feh --bg-scale /opt/${PROJECT}/data/images/wall0$INT.png
 noVNC_run() {
 screen -S noVNC$DISPLAY -X kill
 noVNC_PROC="/opt/noVNC/utils/novnc_proxy --vnc localhost:5998 --listen localhost:6998"
+#noVNC_PROC="sudo /usr/bin/websockify --web=/opt/noVNC localhost:5998 localhost:6998"
+#noVNC_PROC="/opt/noVNC/utils/novnc_proxy --vnc 10.71.63.221:5998 --listen localhost:6998"
 # "websockify -D --web=/usr/share/novnc 6998 localhost:5998"
 screen -dmS noVNC$DISPLAY $noVNC_PROC
 noVNC_URL="http://localhost:6998/vnc_lite.html?host=localhost&port=6998&password=busyman&scale=remote"
 }
 
 ui_position_size() {
+  __wallpaper_change
   _WINDOW=$(xdotool search --onlyvisible --name "$SPOT01")
-  xdotool search --sync --onlyvisible --name novnc windowunmap windowmap| logline
+  xdotool search --sync --onlyvisible --name novnc windowunmap windowmap
+  xdotool search --sync --onlyvisible --name novnc windowactivate
   transset_blank
-  xdotool search --sync --onlyvisible --name novnc windowactivate | logline
-  xdotool search --sync --onlyvisible --name "novnc" windowsize 800 688 windowmove 0 -87 | logline
+  xdotool search --sync --onlyvisible --name "novnc" windowsize 808 692 windowmove 0 -88 | logline
+  ## echo "move window 5 steps below x=0.... no possible be moved by windowsize parameter below zero"
+  xdotool search --sync --onlyvisible --name novnc windowactivate
+  xdotool key --delay 400 Alt_L+space
+  # xdotool key --delay 400 m # sometime shortcut Move not working, so cursors instead
+  __wallpaper_change
+  xdotool key --delay 400 Down Down Down Down Return
+  __wallpaper_change
+  xdotool keydown --delay 400 Ctrl key --delay 400 Left Left Left Left keyup Ctrl
+  __wallpaper_change
+  xdotool key --delay 200 Return
+  xdotool key --delay 200 Escape
+  transset -a 1
 }
 
 BR01_run() {
@@ -61,6 +80,7 @@ BR01_run() {
 
 case $1 in
   stop)
+    xdotool search --onlyvisible --name noVNC windowkill
     screen -S noVNC$DISP -X kill
   ;;
   *)
